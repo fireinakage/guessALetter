@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <title>Guess A Letter</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
+            body {
+                background-color: rgb(212, 223, 207);
+                font-family: "Comic Relief", system-ui !important;
+                font-weight: 400 !important;
+                font-style: normal !important;
+            }
+            #header {
+                text-align: center;
+                background: #b2ccb3;
+                margin: 0px;
+                border-radius: 10px;
+                padding: 10px;
+                font-size: 50px;
+            }
+
+            #word p {
+                text-align: center;
+                font-size: 25px;
+                background: #ffffff;
+                display: block;
+                margin: 20px;
+                border-radius: 10px;
+                margin-left: 40%;
+                margin-right: 40%;
+            }
+
+            #userInputBox input[type=text]  {
+                background: white;
+                border: none;
+                display: block;
+                margin: auto;
+                border-radius: 10px;
+                text-align: center;
+                padding: 5px;
+                width: 100px;
+                font-family: "Comic Relief", system-ui !important;
+                font-weight: 400 !important;
+                font-style: normal !important;
+            }
+
+            #userInputBox input[type=text]:focus {
+                border: none;
+                outline: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            Guess a Letter
+        </div>
+        <div id="word">
+            <p id="wordLetters">_ _ _</p>
+        </div>
+        <div id="userInputBox">
+            <input type="text" id="userInput" autocomplete="off" maxlength="1">
+        </div>
+        <button id="submit" onclick="guessLetter(document.getElementById('userInput').value)">Submit</button>
+        <div>
+            <p id="incorrectLettersBox">Incorrect Letters:</p>
+        </div>
+        <script>
+            const randomWords = ['F O X', 'C O W', 'B A T', 'H A T', 'P E N', 'A N D', 'T H E', 'V O X', 'V A L'];
+            let secretWordLetters;
+            let guessedLetters = ['_', '_', '_'];
+            let incorrectLetters = [''];
+            function chooseWord() {
+                let chosenWord = randomWords[Math.floor(Math.random() * randomWords.length)]
+                chosenWord = chosenWord.split(' ');
+                console.log(chosenWord)
+                return chosenWord
+            }
+
+            secretWordLetters = chooseWord();
+
+            function guessLetter(input) {
+                input = input.toUpperCase();
+                document.getElementById('userInput').value = ''
+                let isTrue;
+                for (let eachLetter of secretWordLetters) {
+                    if (eachLetter == input) {
+                        console.log('Letter Found')
+                        let i = secretWordLetters.indexOf(input)
+                        guessedLetters[i] = input;
+                          isTrue = true;
+                    }
+                }
+                if (!isTrue == true) {
+                    incorrectLetters.push(input);
+                    document.getElementById('incorrectLettersBox').innerHTML = 'Incorrect Letters: ' + incorrectLetters.join(' ');
+                }
+                document.getElementById('wordLetters').innerHTML = guessedLetters.join(' ')
+                checkIfAll(input)
+            }
+
+            function checkIfAll(input) {
+                if (secretWordLetters.join(' ') == guessedLetters.join(' ')) {
+                    alert('You win!')
+                    document.getElementById('userInput').disabled = true
+                    document.getElementById('userInput').placeholder = input
+                }
+            }
+        </script>
+    </body>
+</html>
