@@ -92,6 +92,7 @@
                 }
                 if (!isTrue == true) {
                     incorrectLetters.push(input);
+                    incorrectLetters.sort()
                     document.getElementById('incorrectLettersBox').innerHTML = 'Incorrect Letters: ' + incorrectLetters.join(' ');
                 }
                 document.getElementById('wordLetters').innerHTML = guessedLetters.join(' ')
